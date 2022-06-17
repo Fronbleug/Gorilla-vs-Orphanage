@@ -34,10 +34,8 @@ var HandLight = false
 func _physics_process(delta):
 	
 	if HandLight:
-		$Arm/Hand/Light2D2.visible = true
 		$Light2D.visible = false
 	else:
-		$Arm/Hand/Light2D2.visible = false
 		$Light2D.visible = true
 	
 	

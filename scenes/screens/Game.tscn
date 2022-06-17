@@ -49,6 +49,7 @@ texture = ExtResource( 3 )
 shape = SubResource( 1 )
 
 [node name="Arm" type="Line2D" parent="Player"]
+z_index = 1
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 32.0
 default_color = Color( 1, 1, 1, 1 )
@@ -73,15 +74,6 @@ collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Arm/Hand/Hand/Hand"]
 shape = SubResource( 3 )
-
-[node name="Light2D2" type="Light2D" parent="Player/Arm/Hand"]
-visible = false
-texture = ExtResource( 7 )
-texture_scale = 34.51
-mode = 2
-shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_gradient_length = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
