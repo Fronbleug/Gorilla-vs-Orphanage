@@ -9,3 +9,4 @@ func start(audio):
 
 func _on_SFX_finished():
 	queue_free()
+

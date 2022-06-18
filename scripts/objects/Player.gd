@@ -54,6 +54,10 @@ func _physics_process(delta):
 	if InputDir.x >0:
 		$Sprite.flip_h = false
 		$Arm/Hand/Hand.flip_v = false
+	if InputDir != Vector2():
+		$AnimationPlayer.play("walk")
+	else:
+		$AnimationPlayer.play("idle")
 	
 	
 	if HoverObject != null && GrabbedObject!=null && State == STATES.grab:
@@ -106,12 +110,15 @@ func _physics_process(delta):
 			
 			State = STATES.grab
 			if HoverObject != null:
-				var SFX = global.SFX.instance()
-				SFX.start(GrabSound)
-				SFX.position = position
-				get_parent().add_child(SFX)
-				GrabbedObject = HoverObject
-				GrabbedObject.Grab(self)
+				if not $Arm/Hand/Hand/Hand.overlaps_body(HoverObject):
+					HoverObject = null
+				else:
+					var SFX = global.SFX.instance()
+					SFX.start(GrabSound)
+					SFX.position = position
+					get_parent().add_child(SFX)
+					GrabbedObject = HoverObject
+					GrabbedObject.Grab(self)
 			
 	if Input.is_action_just_released("Click"):
 		if State != STATES.shoot:
