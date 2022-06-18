@@ -9,18 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "",
-"class": "GitAPI",
-"language": "NativeScript",
-"path": "res://addons/godot-git-plugin/git_api.gdns"
-}, {
 "base": "KinematicBody2D",
 "class": "GrabObject",
 "language": "GDScript",
 "path": "res://scripts/objects/GrabObject.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": "",
 "GrabObject": ""
 }
 
@@ -32,7 +26,7 @@ config/icon="res://sprites/objects/purepng.com-gorillagorillablack-gorillagorill
 
 [gdnative]
 
-singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+singletons=[  ]
 
 [global]
 
