@@ -48,8 +48,12 @@ func _physics_process(delta):
 	InputDir.x = Input.get_axis("ui_left","ui_right") 
 	InputDir.y = Input.get_axis("ui_up","ui_down") 
 	
-	if InputDir.x > 1:
-		$Sprite.f
+	if InputDir.x < 0:
+		$Sprite.flip_h = true
+		$Arm/Hand/Hand.flip_v = true
+	if InputDir.x >0:
+		$Sprite.flip_h = false
+		$Arm/Hand/Hand.flip_v = false
 	
 	
 	if HoverObject != null && GrabbedObject!=null && State == STATES.grab:
