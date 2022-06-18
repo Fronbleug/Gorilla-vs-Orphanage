@@ -8,7 +8,7 @@ var State = STATES.default
 var Velocity = Vector2()
 var InputDir = Vector2()
 
-onready var Bullet = preload("res://scenes/Objects/Bullet.tscn")
+onready var Bullet = preload("res://scenes/objects/Bullet.tscn")
 
 var ArmWeight = 0.5
 

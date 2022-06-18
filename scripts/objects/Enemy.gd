@@ -6,7 +6,7 @@ extends GrabObject
 # var b = "text"
 var Hp = 100
 export var MaxHp = 100
-onready var DEffect = preload("res://scenes/Objects/Effect.tscn")
+onready var DEffect = preload("res://scenes/objects/Effect.tscn")
 onready var Sound = preload("res://audio/gore.ogg")
 onready var Sound2 = preload("res://audio/gore2.ogg")
 
