@@ -21,8 +21,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Gorilla vs Orphanage"
-run/main_scene="res://scenes/screens/Game.tscn"
+run/main_scene="res://scenes/screens/MainMenu.tscn"
 config/icon="res://sprites/objects/purepng.com-gorillagorillablack-gorillagorilla-standing-4815209580601iomj.png"
+
+[autoload]
+
+global="*res://scripts/global.gd"
+audio="*res://scenes/Audio.tscn"
 
 [gdnative]
 
@@ -54,6 +59,10 @@ texture={
 "size_limit": 0,
 "stream": false,
 "svg/scale": 1.0
+}
+ogg_vorbis={
+"loop": false,
+"loop_offset": 0
 }
 
 [input]

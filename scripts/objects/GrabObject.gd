@@ -12,6 +12,8 @@ var lastpos = Vector2()
 var PreColVel = Vector2()
 var Grabber = null
 
+onready var HitSound = preload("res://audio/hit.ogg")
+
 func _ready():
 	add_to_group("GrabObject")
 
@@ -45,6 +47,10 @@ func _on_Area2D_body_entered(body):
 			print("s")
 			Collided(Vector2())
 func Collided(vel):
+	var SFX = global.SFX.instance()
+	SFX.start(HitSound)
+	SFX.position = position
+	get_parent().add_child(SFX)
 	Velocity += vel * Weight
 
 

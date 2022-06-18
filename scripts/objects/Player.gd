@@ -30,6 +30,11 @@ var PunchVel = Vector2()
 
 var HandLight = false
 
+onready var GrabSound = preload("res://audio/grab.ogg")
+onready var DropSound = preload("res://audio/drop.ogg")
+onready var GunSound = preload("res://audio/gun.ogg")
+
+
 
 func _physics_process(delta):
 	
@@ -43,6 +48,8 @@ func _physics_process(delta):
 	InputDir.x = Input.get_axis("ui_left","ui_right") 
 	InputDir.y = Input.get_axis("ui_up","ui_down") 
 	
+	if InputDir.x > 1:
+		$Sprite.f
 	
 	
 	if HoverObject != null && GrabbedObject!=null && State == STATES.grab:
@@ -84,12 +91,21 @@ func _physics_process(delta):
 	
 	if Input.is_action_just_pressed("Click"):
 		if State == STATES.shoot:
+			var SFX = global.SFX.instance()
+			SFX.start(GunSound)
+			SFX.position = position
+			get_parent().add_child(SFX)
 			var b = Bullet.instance()
 			b.Start(2000,$Arm/Hand.position.normalized(),$Arm/Hand.global_position)
 			get_parent().Bullets.add_child(b)
 		else:
+			
 			State = STATES.grab
 			if HoverObject != null:
+				var SFX = global.SFX.instance()
+				SFX.start(GrabSound)
+				SFX.position = position
+				get_parent().add_child(SFX)
 				GrabbedObject = HoverObject
 				GrabbedObject.Grab(self)
 			
@@ -97,6 +113,10 @@ func _physics_process(delta):
 		if State != STATES.shoot:
 			State = STATES.default
 			if GrabbedObject != null:
+				var SFX = global.SFX.instance()
+				SFX.start(DropSound)
+				SFX.position = position
+				get_parent().add_child(SFX)
 				GrabbedObject.UnGrab()
 				GrabbedObject = null
 	if Input.is_action_just_pressed("LeftClick"):
@@ -115,9 +135,7 @@ func _on_Hand_body_entered(body):
 	if State == STATES.default and (body.is_in_group("GrabObject")):
 		HoverObject = body
 	elif body.is_in_group("GrabObject") && body != GrabbedObject && State == STATES.grab:
-		if body.is_in_group("Enemy"):
-			body.hurt(PunchVel.length()/20)
-		body.Velocity += PunchVel * body.Weight
+		body.Collided(ArmVelocity)
 
 
 

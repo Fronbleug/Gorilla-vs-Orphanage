@@ -7,6 +7,10 @@ extends GrabObject
 var Hp = 100
 export var MaxHp = 100
 onready var DEffect = preload("res://scenes/Objects/Effect.tscn")
+onready var Sound = preload("res://audio/gore.ogg")
+onready var Sound2 = preload("res://audio/gore2.ogg")
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,8 +35,22 @@ func hurt(damage):
 		var Deffect = DEffect.instance()
 		Deffect.position = position
 		get_parent().add_child(Deffect)
+		var SFX = global.SFX.instance()
+		SFX.start(GetGoreSound())
+		SFX.position = position
+		get_parent().add_child(SFX)
 		get_tree().root.get_node("Game").Children.remove(get_tree().root.get_node("Game").Children.find(self))
 		queue_free()
 func Collided(vel):
 	.Collided(vel)
-	hurt(vel.length()/5+Velocity.length()/5)
+	hurt(vel.length()/50+Velocity.length()/50)
+func GetGoreSound():
+	var RNG = RandomNumberGenerator.new()
+	RNG.randomize()
+	match RNG.randi_range(0,1):
+		0:
+			return Sound
+		1:
+			return Sound2
+	 
+	

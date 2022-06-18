@@ -18,7 +18,7 @@ func _ready():
 
 func _process(delta):
 	if Children.size() <= 0:
-		pass
+		$CanvasLayer/Arrow.show()
 	else:
 		Time += delta
 		$CanvasLayer/Label.text = str(stepify(Time,0.01))

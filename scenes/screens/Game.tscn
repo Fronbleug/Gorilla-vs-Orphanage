@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/screens/Game.gd" type="Script" id=1]
 [ext_resource path="res://scenes/Objects/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://sprites/objects/arrow.png" type="Texture" id=3]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 1 )
@@ -24,3 +25,16 @@ margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
 text = "defeaf"
 align = 1
+
+[node name="Arrow" type="TextureRect" parent="CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -76.5
+margin_top = -175.0
+margin_right = 76.5
+margin_bottom = -22.0
+texture = ExtResource( 3 )
+expand = true
