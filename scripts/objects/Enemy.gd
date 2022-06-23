@@ -10,6 +10,7 @@ onready var DEffect = preload("res://scenes/objects/Effect.tscn")
 onready var Sound = preload("res://audio/gore.ogg")
 onready var Sound2 = preload("res://audio/gore2.ogg")
 
+var WasCol = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -18,9 +19,6 @@ func _ready():
 	get_tree().root.get_node("Game").Children.append(self)
 	Hp = MaxHp
 
-func _physics_process(delta):
-	if Velocity.length() > 10000:
-			hurt(Hp)
 
 func hurt(damage):
 
@@ -34,16 +32,20 @@ func hurt(damage):
 			Grabber = null
 		var Deffect = DEffect.instance()
 		Deffect.position = position
-		get_parent().add_child(Deffect)
+		get_parent().call_deferred("add_child",Deffect)
 		var SFX = global.SFX.instance()
 		SFX.start(GetGoreSound())
 		SFX.position = position
 		get_parent().add_child(SFX)
-		get_tree().root.get_node("Game").Children.remove(get_tree().root.get_node("Game").Children.find(self))
+		var index = get_tree().root.get_node("Game").Children.find(self)
+		if index != -1:
+			get_tree().root.get_node("Game").Children.remove(index)
 		queue_free()
-func Collided(vel):
-	.Collided(vel)
-	hurt(vel.length()/50+Velocity.length()/50)
+func Collided(vel,weight):
+	.Collided(vel,weight)
+	if weight == 0:
+		weight = 0.000000000001
+	hurt(((vel.length()/20)+Velocity.length()/2) / weight )
 func GetGoreSound():
 	var RNG = RandomNumberGenerator.new()
 	RNG.randomize()

@@ -7,8 +7,9 @@
 [ext_resource path="res://sprites/objects/Light.png" type="Texture" id=5]
 [ext_resource path="res://scripts/objects/Player.gd" type="Script" id=6]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 32, 32 )
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 13.8737
+height = 33.7526
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.0
@@ -63,6 +64,7 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D" groups=["Player"]]
+collision_layer = 17
 collision_mask = 4
 script = ExtResource( 6 )
 
@@ -72,10 +74,11 @@ texture = ExtResource( 1 )
 hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+position = Vector2( 0, 24.1263 )
+rotation = 1.5708
+shape = SubResource( 9 )
 
 [node name="Arm" type="Line2D" parent="."]
-z_index = 1
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 32.0
 default_color = Color( 1, 1, 1, 1 )
@@ -96,22 +99,13 @@ texture = ExtResource( 2 )
 hframes = 3
 
 [node name="Hand" type="Area2D" parent="Arm/Hand/Hand"]
-collision_mask = 2
+collision_mask = 66
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Arm/Hand/Hand/Hand"]
 shape = SubResource( 3 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
-
-[node name="Light2D" type="Light2D" parent="."]
-texture = ExtResource( 5 )
-texture_scale = 27.44
-mode = 2
-shadow_enabled = true
-shadow_color = Color( 0, 0, 0, 1 )
-shadow_gradient_length = 1.0
-shadow_filter = 5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -134,9 +128,39 @@ margin_bottom = 9.0
 rect_pivot_offset = Vector2( 8, 8 )
 texture = ExtResource( 4 )
 
+[node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
+margin_left = 18.8988
+margin_top = 15.119
+margin_right = 63.8988
+margin_bottom = 29.119
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "mph: "
+
+[node name="Ammo" type="Label" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 32.0
+margin_top = -52.0
+margin_right = 85.0
+margin_bottom = -38.0
+rect_scale = Vector2( 2, 2 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Ammo: 0"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 7 )
 anims/walk = SubResource( 8 )
 
-[connection signal="body_entered" from="Arm/Hand/Hand/Hand" to="." method="_on_Hand_body_entered"]
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 0, 24.25 )
+texture = ExtResource( 5 )
+texture_scale = 27.44
+mode = 3
+shadow_enabled = true
+shadow_color = Color( 0, 0, 0, 1 )
+shadow_gradient_length = 7.0
+shadow_filter = 5
+
 [connection signal="body_exited" from="Arm/Hand/Hand/Hand" to="." method="_on_Hand_body_exited"]

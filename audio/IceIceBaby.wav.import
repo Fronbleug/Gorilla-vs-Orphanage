@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/IceIceBaby.wav-9dcdabf21ba4d942853ab01f3853e33f.sample"
+
+[deps]
+
+source_file="res://audio/IceIceBaby.wav"
+dest_files=[ "res://.import/IceIceBaby.wav-9dcdabf21ba4d942853ab01f3853e33f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

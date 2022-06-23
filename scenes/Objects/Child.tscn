@@ -7,6 +7,7 @@
 
 [node name="Child" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
+Weight = 0.8
 
 [node name="Icon" parent="." index="0"]
 scale = Vector2( 1, 1 )
