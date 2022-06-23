@@ -24,7 +24,8 @@ func _process(delta):
 	
 	if Children.size() <= 0:
 		$CanvasLayer/Arrow.show()
-		$CanvasLayer/Arrow.set_rotation( ((Player.position - Door.position).normalized()).angle())
+		if Player != null && Door != null:
+			$CanvasLayer/Arrow.set_rotation( ((Player.position - Door.position).normalized()).angle())
 	if not Ended:
 			Time += delta
 			$CanvasLayer/Label.text = str(stepify(Time,0.01))

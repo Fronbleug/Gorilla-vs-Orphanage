@@ -6,7 +6,6 @@ extends GrabObject
 # var b = "text"
 var Hp = 100
 export var MaxHp = 100
-onready var DEffect = preload("res://scenes/objects/Effect.tscn")
 onready var Sound = preload("res://audio/gore.ogg")
 onready var Sound2 = preload("res://audio/gore2.ogg")
 
@@ -30,7 +29,7 @@ func hurt(damage):
 			Grabber.GrabbedObject = null
 			Grabber.HoverObject = null
 			Grabber = null
-		var Deffect = DEffect.instance()
+		var Deffect = global.BloodEffect.instance()
 		Deffect.position = position
 		get_parent().call_deferred("add_child",Deffect)
 		var SFX = global.SFX.instance()

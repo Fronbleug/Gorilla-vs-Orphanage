@@ -7,7 +7,6 @@ extends StaticBody2D
 
 export var MaxHp = 200
 export var Hp = 200
-onready var Particle = preload("res://scenes/objects/effects/Wood.tscn")
 
 onready var HitSound = preload("res://audio/hit.ogg")
 
@@ -23,7 +22,7 @@ func Collided(vel,w):
 	Hp -= (vel.length()/10)/w
 	GetBreakAmmount(Hp)
 	if Hp <= 0:
-		var part = Particle.instance()
+		var part = global.WoodEffect.instance()
 		part.position = position
 		get_parent().add_child(part)
 		
