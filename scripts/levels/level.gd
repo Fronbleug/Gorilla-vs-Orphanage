@@ -1,9 +1,13 @@
+class_name Level
 extends Node2D
 
+
+onready var RockEffect = preload("res://scenes/objects/effects/Rock.tscn")
 
 export var PlayerPos = Vector2(0,0)
 
 export (NodePath) var Exit = null
+
 
 
 func _ready():

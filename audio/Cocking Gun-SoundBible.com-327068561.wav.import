@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Cocking Gun-SoundBible.com-327068561.wav-fda535de6c043eb849aaa8d6d38d1ad0.sample"
+
+[deps]
+
+source_file="res://audio/Cocking Gun-SoundBible.com-327068561.wav"
+dest_files=[ "res://.import/Cocking Gun-SoundBible.com-327068561.wav-fda535de6c043eb849aaa8d6d38d1ad0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

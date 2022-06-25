@@ -14,3 +14,7 @@ func _on_Button_pressed():
 
 func _on_Button2_pressed():
 	get_tree().quit()
+
+
+func _on_secretButton_pressed():
+	global.Level = "res://scenes/levels/Debug.tscn"

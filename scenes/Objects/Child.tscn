@@ -7,11 +7,11 @@
 
 [node name="Child" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
-Weight = 0.8
+Weight = 0.6
 
 [node name="Icon" parent="." index="0"]
-scale = Vector2( 1, 1 )
 texture = ExtResource( 4 )
+hframes = 6
 
 [node name="TextureProgress" type="TextureProgress" parent="." index="3"]
 margin_left = -40.0

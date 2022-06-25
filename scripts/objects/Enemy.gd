@@ -12,7 +12,10 @@ onready var Sound2 = preload("res://audio/gore2.ogg")
 var WasCol = false
 
 
+
+
 # Called when the node enters the scene tree for the first time.
+
 func _ready():
 	add_to_group("Enemy")
 	get_tree().root.get_node("Game").Children.append(self)
@@ -20,8 +23,8 @@ func _ready():
 
 
 func hurt(damage):
-
 	Hp -= damage
+
 	$TextureProgress.value = Hp
 	
 	if Hp <= 0:
@@ -39,12 +42,15 @@ func hurt(damage):
 		var index = get_tree().root.get_node("Game").Children.find(self)
 		if index != -1:
 			get_tree().root.get_node("Game").Children.remove(index)
-		queue_free()
-func Collided(vel,weight):
-	.Collided(vel,weight)
-	if weight == 0:
-		weight = 0.000000000001
-	hurt(((vel.length()/20)+Velocity.length()/2) / weight )
+			queue_free()
+func Collided(vel,weight,dam):
+		.Collided(vel,weight,dam)
+		if weight == 0:
+			weight = 0.000000000001
+		print(str("1: ", vel.length(), " 2: ", Velocity.length()))
+		hurt(((((vel.length())/ weight)+Velocity.length()*Delta)/Weight)*dam  )
+
+			
 func GetGoreSound():
 	var RNG = RandomNumberGenerator.new()
 	RNG.randomize()

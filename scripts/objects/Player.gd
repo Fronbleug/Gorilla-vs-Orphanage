@@ -14,7 +14,7 @@ onready var Bullet = preload("res://scenes/objects/Bullet.tscn")
 var ArmWeight = 0.5
 
 
-var GrabbedObject = null
+var GrabbedObject : GrabObject = null
 
 var HoverObject = null
 
@@ -28,6 +28,8 @@ var GrabFloorPosition = Vector2()
 var ArmVelocity = Vector2()
 
 var PunchVel = Vector2()
+
+var Rotation = 0
 
 var HandLight = false
 
@@ -51,6 +53,11 @@ onready var IceICeBabu = preload("res://audio/IceIceBaby.wav")
 func _ready():
 	get_tree().root.get_node("Game").Player = self
 func _physics_process(delta):
+	if GrabbedObject != null:
+			if GrabbedObject.is_in_group("Gun"):
+					$CanvasLayer/Ammo.text = str("Ammo: ", Ammo)
+	else:
+		$CanvasLayer/Ammo.text = ""
 	
 	var tile = get_tree().root.get_node("Game").Tilemap.get_cellv((position/64).round())
 	TileOn = get_tree().root.get_node("Game").Tilemap.GetTileType(tile)
@@ -67,9 +74,9 @@ func _physics_process(delta):
 			elif State == STATES.grab:
 				if not Punched:
 					if body.is_in_group("GrabObject") && body != GrabbedObject:
-						body.Collided(PunchVel/100,ArmWeight)
+						body.Collided(PunchVel*delta,ArmWeight,5)
 					elif body.is_in_group("BreakObject"):
-						body.Collided(PunchVel/100,ArmWeight)
+						body.Collided(PunchVel*delta,ArmWeight,5)
 					Punched = true
 	
 	match TileOn:
@@ -96,23 +103,32 @@ func _physics_process(delta):
 		if InputDir.x < 0:
 			$Sprite.flip_h = true
 			$Arm/Hand/Hand.flip_v = true
+			if GrabbedObject != null:
+				if GrabbedObject.is_in_group("Weapon"):
+					GrabbedObject.Flip(true)
 		if InputDir.x >0:
 			$Sprite.flip_h = false
 			$Arm/Hand/Hand.flip_v = false
+			if GrabbedObject != null:
+				if GrabbedObject.is_in_group("Weapon"):
+					GrabbedObject.Flip(false)
 		if InputDir != Vector2():
 			$AnimationPlayer.play("walk")
 		else:
 			$AnimationPlayer.play("idle")
 		
 		
-		if HoverObject != null && GrabbedObject!=null && State == STATES.grab:
+		if HoverObject != null && GrabbedObject!=null && State == STATES.grab || State == STATES.shoot:
 				
 				ArmWeight = GrabbedObject.Weight
 				GrabbedObject.position = $Arm/Hand.global_position
 		else:
 			ArmWeight = 0.5
 		
-		Velocity += InputDir * 35
+		if GrabbedObject == null:
+			Velocity += InputDir * 35
+		else:
+			Velocity += InputDir * 35
 		Velocity = move_and_slide(Velocity)
 		Velocity = Velocity.clamped(120000)
 		
@@ -140,6 +156,7 @@ func _physics_process(delta):
 		$Arm.set_point_position(1,$Arm/Hand.position)
 		
 		$Arm/Hand/Hand.rotation = $Arm/Hand.position.angle()
+		Rotation = $Arm/Hand/Hand.rotation
 		$Arm/Hand/Hand.frame = State
 		
 		
@@ -149,19 +166,6 @@ func _physics_process(delta):
 		
 		
 		if Input.is_action_just_pressed("Click"):
-			if State == STATES.shoot:
-				if Ammo > 0:
-					var SFX = global.SFX.instance()
-					SFX.start(GunSound)
-					SFX.position = position
-					get_parent().add_child(SFX)
-					var b = Bullet.instance()
-					b.Start(1500,$Arm/Hand.position.normalized(),$Arm/Hand.global_position)
-					get_tree().root.get_node("Game").Bullets.add_child(b)
-					
-					Ammo -= 1
-					$CanvasLayer/Ammo.text = str("Ammo: ", Ammo)
-			else:
 				var SFX = global.SFX.instance()
 				SFX.start(GrabSound)
 				SFX.position = position
@@ -169,8 +173,6 @@ func _physics_process(delta):
 				State = STATES.grab
 				if HoverObject != null:
 					if HoverObject.is_in_group("Collect"):
-						Ammo += 1
-						$CanvasLayer/Ammo.text = str("Ammo: ", Ammo)
 						HoverObject.queue_free()
 						HoverObject = null
 					else:
@@ -180,29 +182,27 @@ func _physics_process(delta):
 
 							GrabbedObject = HoverObject
 							GrabbedObject.Grab(self)
+							if GrabbedObject.is_in_group("Gun"):
+								State = STATES.shoot
 
 				
 		if Input.is_action_just_released("Click"):
 			Punched = false
 			
-			if State != STATES.shoot:
-				var SFX = global.SFX.instance()
-				SFX.start(DropSound)
-				SFX.position = position
-				get_parent().add_child(SFX)
-				State = STATES.default
-				if GrabbedObject != null:
-
-					GrabbedObject.UnGrab()
-					GrabbedObject = null
+			var SFX = global.SFX.instance()
+			SFX.start(DropSound)
+			SFX.position = position
+			get_parent().add_child(SFX)
+			State = STATES.default
+			if GrabbedObject != null:
+				GrabbedObject.UnGrab()
+				GrabbedObject = null
 		if Input.is_action_just_pressed("LeftClick"):
-			
-			if GrabbedObject == null:
-				State = STATES.shoot
+			if GrabbedObject != null:
+				GrabbedObject.Use()
 		if Input.is_action_just_released("LeftClick"):
-			if State == STATES.shoot:
-				State = STATES.default
-				
+			if GrabbedObject != null:
+				GrabbedObject.UnUse()
 		if Input.is_action_just_pressed("MiddleClick"):
 			HandLight = !HandLight
 	else:

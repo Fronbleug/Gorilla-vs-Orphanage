@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/objects/GrabObject.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/objects/ThrowObjects/Remote.gd" type="Script" id=2]
+[ext_resource path="res://sprites/objects/GrabObject/Remote.png" type="Texture" id=3]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 20.0
+
+[node name="Remote" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Icon" parent="." index="0"]
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 2 )

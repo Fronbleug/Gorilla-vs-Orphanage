@@ -1,14 +1,18 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://scenes/objects/Child.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/levels/level.gd" type="Script" id=2]
-[ext_resource path="res://scenes/objects/GrabObject.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/objects/ThrowObjects/Rock.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/objects/BreakObject.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/Pistol.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/tiles/building.png" type="Texture" id=6]
 [ext_resource path="res://scripts/objects/Tiles.gd" type="Script" id=7]
 [ext_resource path="res://sprites/tiles/ice.png" type="Texture" id=8]
 [ext_resource path="res://scenes/objects/Player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sprites/tiles/Black.png" type="Texture" id=10]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/Musket.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/SuperGun.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/objects/ThrowObjects/Sword.tscn" type="PackedScene" id=13]
 
 [sub_resource type="OccluderPolygon2D" id=5]
 polygon = PoolVector2Array( 0, 0, 64, 0, 64, 64, 0, 64 )
@@ -219,10 +223,6 @@ position = Vector2( 1474, -675 )
 [node name="Child23" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 78, -695 )
 
-[node name="Rock" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 109, 229 )
-Weight = 0.18
-
 [node name="BreakObject" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 672, 46 )
 
@@ -235,6 +235,32 @@ position = Vector2( 544, 942 )
 
 [node name="Player" parent="YSort" instance=ExtResource( 9 )]
 position = Vector2( -302, 364 )
+
+[node name="Rock" parent="YSort" instance=ExtResource( 3 )]
+position = Vector2( 104, 227 )
+
+[node name="SuperGun" parent="YSort" instance=ExtResource( 12 )]
+position = Vector2( -163, 380 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+Weight = 1.0
+
+[node name="Musket" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( -27, 425 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+
+[node name="Pistol" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 3, 362 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+Weight = 1.0
+
+[node name="Sword" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( -85, 367 )
 
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( -580, 384 )

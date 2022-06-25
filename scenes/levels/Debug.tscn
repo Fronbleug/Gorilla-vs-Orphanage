@@ -1,0 +1,87 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://scenes/objects/ThrowObjects/Remote.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/objects/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/levels/Debug.gd" type="Script" id=3]
+[ext_resource path="res://scripts/objects/Tiles.gd" type="Script" id=4]
+[ext_resource path="res://scenes/objects/Child.tscn" type="PackedScene" id=5]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/Gun.tscn" type="PackedScene" id=6]
+[ext_resource path="res://scenes/objects/ThrowObjects/Chair.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/Pistol.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/SuperGun.tscn" type="PackedScene" id=9]
+[ext_resource path="res://scenes/objects/ThrowObjects/Rock.tscn" type="PackedScene" id=10]
+[ext_resource path="res://scenes/objects/ThrowObjects/Guns/Musket.tscn" type="PackedScene" id=11]
+[ext_resource path="res://scenes/objects/ThrowObjects/Plant.tscn" type="PackedScene" id=12]
+[ext_resource path="res://scenes/objects/ThrowObjects/Bottle.tscn" type="PackedScene" id=13]
+[ext_resource path="res://scenes/objects/ThrowObjects/Sword.tscn" type="PackedScene" id=14]
+
+[sub_resource type="TileSet" id=1]
+
+[node name="Debug" type="Node2D"]
+script = ExtResource( 3 )
+Exit = NodePath("Node2D")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 1 )
+format = 1
+script = ExtResource( 4 )
+
+[node name="YSort" type="YSort" parent="."]
+
+[node name="Player" parent="YSort" instance=ExtResource( 2 )]
+position = Vector2( 61, 99 )
+
+[node name="Remote" parent="YSort" instance=ExtResource( 1 )]
+position = Vector2( 153, 118 )
+Weight = 6.0
+
+[node name="Bottle" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( 387, 233 )
+
+[node name="Chair" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 309, 258 )
+
+[node name="Plant" parent="YSort" instance=ExtResource( 12 )]
+position = Vector2( 240, 259 )
+
+[node name="Rock" parent="YSort" instance=ExtResource( 10 )]
+position = Vector2( 182, 280 )
+
+[node name="Gun" parent="YSort" instance=ExtResource( 6 )]
+position = Vector2( -59, 250 )
+Damage = 0
+
+[node name="Musket" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( 18, 283 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+Auto = true
+
+[node name="Pistol" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 13, 236 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+Weight = 1.0
+Auto = true
+
+[node name="SuperGun" parent="YSort" instance=ExtResource( 9 )]
+position = Vector2( -124, 204 )
+collision_layer = 2
+collision_mask = 6
+input_pickable = true
+Weight = 1.0
+
+[node name="Child" parent="YSort" instance=ExtResource( 5 )]
+position = Vector2( 951, 8 )
+
+[node name="Sword" parent="YSort" instance=ExtResource( 14 )]
+position = Vector2( 335, 173 )
+
+[node name="Node2D" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="use" from="YSort/Remote" to="." method="_on_Remote_use"]

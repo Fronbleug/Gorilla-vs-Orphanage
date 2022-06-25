@@ -17,7 +17,7 @@ var Ended = false
 var Door = null
 
 func _ready():
-	load_level("res://scenes/levels/Test.tscn")
+	load_level(global.Level)
 	Bullets = get_node("Bullets")
 
 func _process(delta):

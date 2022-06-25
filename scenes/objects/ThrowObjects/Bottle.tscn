@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://sprites/objects/furnature/Bottle.png" type="Texture" id=1]
+[ext_resource path="res://scenes/objects/GrabObject.tscn" type="PackedScene" id=2]
+
+[node name="Bottle" instance=ExtResource( 2 )]
+
+[node name="Icon" parent="." index="0"]
+texture = ExtResource( 1 )

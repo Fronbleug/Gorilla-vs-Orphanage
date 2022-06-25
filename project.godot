@@ -13,9 +13,27 @@ _global_script_classes=[ {
 "class": "GrabObject",
 "language": "GDScript",
 "path": "res://scripts/objects/GrabObject.gd"
+}, {
+"base": "Node2D",
+"class": "Level",
+"language": "GDScript",
+"path": "res://scripts/levels/level.gd"
+}, {
+"base": "GrabObject",
+"class": "Remote",
+"language": "GDScript",
+"path": "res://scripts/objects/ThrowObjects/Remote.gd"
+}, {
+"base": "GrabObject",
+"class": "Weapon",
+"language": "GDScript",
+"path": "res://Weapon.gd"
 } ]
 _global_script_class_icons={
-"GrabObject": ""
+"GrabObject": "",
+"Level": "",
+"Remote": "",
+"Weapon": ""
 }
 
 [application]
