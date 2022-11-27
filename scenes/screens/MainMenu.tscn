@@ -48,6 +48,69 @@ margin_right = 1738.0
 margin_bottom = 820.0
 flat = true
 
+[node name="Button2" type="Button" parent="."]
+margin_left = 60.4597
+margin_top = 926.378
+margin_right = 179.46
+margin_bottom = 990.378
+text = "Settings"
+
+[node name="WindowDialog" type="WindowDialog" parent="."]
+visible = true
+margin_left = 257.0
+margin_top = 256.0
+margin_right = 1198.0
+margin_bottom = 845.0
+window_title = "settings"
+
+[node name="Label" type="Label" parent="WindowDialog"]
+margin_left = 145.498
+margin_top = 101.448
+margin_right = 266.498
+margin_bottom = 138.448
+text = "Master"
+
+[node name="MasterSlider" type="HSlider" parent="WindowDialog"]
+margin_left = 146.832
+margin_top = 110.792
+margin_right = 625.832
+margin_bottom = 202.792
+value = 50.0
+
+[node name="Label2" type="Label" parent="WindowDialog"]
+margin_left = 145.498
+margin_top = 197.556
+margin_right = 266.498
+margin_bottom = 234.556
+text = "SFX
+"
+
+[node name="SFXSlider" type="HSlider" parent="WindowDialog"]
+margin_left = 134.819
+margin_top = 221.583
+margin_right = 613.819
+margin_bottom = 313.583
+value = 50.0
+
+[node name="Label3" type="Label" parent="WindowDialog"]
+margin_left = 142.828
+margin_top = 307.013
+margin_right = 263.828
+margin_bottom = 344.013
+text = "Music
+"
+
+[node name="MusicSlider" type="HSlider" parent="WindowDialog"]
+margin_left = 136.154
+margin_top = 331.04
+margin_right = 615.154
+margin_bottom = 423.04
+value = 50.0
+
 [connection signal="pressed" from="TextureRect/VBoxContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="TextureRect/VBoxContainer/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_secretButton_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_settings_pressed"]
+[connection signal="value_changed" from="WindowDialog/MasterSlider" to="." method="_on_MasterSlider_value_changed"]
+[connection signal="value_changed" from="WindowDialog/SFXSlider" to="." method="_on_SFXSlider_value_changed"]
+[connection signal="value_changed" from="WindowDialog/MusicSlider" to="." method="_on_MusicSlider_value_changed"]

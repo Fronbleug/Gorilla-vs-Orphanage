@@ -258,19 +258,12 @@ Mass = 10
 
 [node name="SuperGun" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( -163, 380 )
-Speed = 1500
-ReloadTime = 1.0
 
 [node name="Musket" parent="YSort" instance=ExtResource( 11 )]
 position = Vector2( -27, 425 )
 
 [node name="Pistol" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 3, 362 )
-Ammo = inf
-Speed = 1500
-ReloadTime = 1.0
-Accuracy = 1.0
-Auto = false
 
 [node name="DebugRemote" parent="YSort" instance=ExtResource( 13 )]
 position = Vector2( -46, 307 )

@@ -12,6 +12,12 @@ radius = 20.0
 
 [node name="Gun" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+Ammo = inf
+Speed = 1500
+ShootTime = 0.001
+ReloadTime = 1.0
+Accuracy = 1.0
+Auto = false
 
 [node name="Icon" parent="." index="0"]
 position = Vector2( 7, -6 )
@@ -33,6 +39,7 @@ one_shot = true
 [node name="CockingSOund" type="AudioStreamPlayer2D" parent="." index="4"]
 stream = ExtResource( 3 )
 volume_db = 5.0
+bus = "SFX"
 
 [node name="FirePoint" type="Node2D" parent="." index="5"]
 position = Vector2( 36, -17 )
