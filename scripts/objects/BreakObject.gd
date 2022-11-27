@@ -14,12 +14,12 @@ func _ready():
 	Hp = MaxHp
 	$Sprite/Break.hide()
 
-func Collided(vel,w,h):
+func Collided(vel,m):
 	var SFX = global.SFX.instance()
 	SFX.start(HitSound)
 	SFX.position = position
 	get_parent().add_child(SFX)
-	Hp -= ((vel.length()/10)/w)*h
+	Hp -= (vel.length() * m)/20
 	GetBreakAmmount(Hp)
 	if Hp <= 0:
 		var part = global.WoodEffect.instance()

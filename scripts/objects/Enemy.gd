@@ -43,12 +43,9 @@ func hurt(damage):
 		if index != -1:
 			get_tree().root.get_node("Game").Children.remove(index)
 			queue_free()
-func Collided(vel,weight,dam):
-		.Collided(vel,weight,dam)
-		if weight == 0:
-			weight = 0.000000000001
-		print(str("1: ", vel.length(), " 2: ", Velocity.length()))
-		hurt(((((vel.length())/ weight)+Velocity.length()*Delta)/Weight)*dam  )
+func Collided(vel,weight):
+		.Collided(vel,weight)
+		hurt(Mass + weight * (Velocity.length() + vel.length())/10)
 
 			
 func GetGoreSound():

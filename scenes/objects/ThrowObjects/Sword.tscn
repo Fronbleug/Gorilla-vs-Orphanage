@@ -13,7 +13,6 @@ height = 48.0
 
 [node name="Sword" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
-Weight = 6.0
 Piercing = true
 Damage = 2
 

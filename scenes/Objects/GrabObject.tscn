@@ -14,7 +14,6 @@ collision_layer = 2
 collision_mask = 6
 input_pickable = true
 script = ExtResource( 2 )
-Weight = 1.0
 
 [node name="Icon" type="Sprite" parent="."]
 texture = ExtResource( 1 )

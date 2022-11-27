@@ -11,7 +11,7 @@ var InputDir = Vector2()
 
 onready var Bullet = preload("res://scenes/objects/Bullet.tscn")
 
-var ArmWeight = 0.5
+var ArmWeight = 2
 
 
 var GrabbedObject : GrabObject = null
@@ -32,6 +32,8 @@ var PunchVel = Vector2()
 var Rotation = 0
 
 var HandLight = false
+
+var Mass = 1
 
 var Friction = 0.07
 
@@ -74,9 +76,9 @@ func _physics_process(delta):
 			elif State == STATES.grab:
 				if not Punched:
 					if body.is_in_group("GrabObject") && body != GrabbedObject:
-						body.Collided(PunchVel*delta,ArmWeight,5)
+						body.Collided(PunchVel,ArmWeight)
 					elif body.is_in_group("BreakObject"):
-						body.Collided(PunchVel*delta,ArmWeight,5)
+						body.Collided(PunchVel,ArmWeight)
 					Punched = true
 	
 	match TileOn:
@@ -118,12 +120,7 @@ func _physics_process(delta):
 			$AnimationPlayer.play("idle")
 		
 		
-		if HoverObject != null && GrabbedObject!=null && State == STATES.grab || State == STATES.shoot:
-				
-				ArmWeight = GrabbedObject.Weight
-				GrabbedObject.position = $Arm/Hand.global_position
-		else:
-			ArmWeight = 0.5
+
 		
 		if GrabbedObject == null:
 			Velocity += InputDir * 35
@@ -143,7 +140,7 @@ func _physics_process(delta):
 		if (not GrabFloor)||(GrabbedObject == null&&GrabFloor):
 			
 			
-			ArmVelocity = (get_local_mouse_position()-$Arm/Hand.position) * 10 * ArmWeight
+			ArmVelocity = (get_local_mouse_position()-$Arm/Hand.position) * 10 / ArmWeight
 			ArmVelocity = $Arm/Hand.move_and_slide(ArmVelocity)
 			if $Arm/Hand.position .length() >= MaxArmLength:
 				$Arm/Hand.position = $Arm/Hand.position.clamped(MaxArmLength)
@@ -208,6 +205,12 @@ func _physics_process(delta):
 	else:
 		Velocity = Vector2()
 		ArmVelocity = Vector2()
+	if HoverObject != null && GrabbedObject!=null && State == STATES.grab || State == STATES.shoot:
+				
+				ArmWeight = GrabbedObject.Mass
+				GrabbedObject.position = $Arm/Hand.global_position
+	else:
+			ArmWeight = 1
 
 
 func End():
