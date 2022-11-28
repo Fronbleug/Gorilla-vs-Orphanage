@@ -59,7 +59,6 @@ script = ExtResource( 1 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -190.0
-margin_top = 7.10543e-15
 margin_right = -114.0
 margin_bottom = 14.0
 rect_scale = Vector2( 5, 5 )
@@ -153,5 +152,6 @@ text = "Quit To Desktop"
 anims/End = SubResource( 1 )
 anims/RESET = SubResource( 2 )
 
+[connection signal="pressed" from="CanvasLayer/EndPanel2/VBoxContainer/NextLevel" to="." method="_on_NextLevel_pressed"]
 [connection signal="pressed" from="CanvasLayer/EndPanel2/VBoxContainer/Exit" to="." method="_on_Exit_pressed"]
 [connection signal="pressed" from="CanvasLayer/EndPanel2/VBoxContainer/Exit2" to="." method="_on_Exit2_pressed"]

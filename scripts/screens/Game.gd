@@ -9,7 +9,7 @@ var Player = null
 var Bullets = null
 var Tilemap = null
 
-var Time = 0.0
+var LevelTimer = 0.0
 
 var Children = []
 var Ended = false
@@ -17,7 +17,7 @@ var Ended = false
 var Door = null
 
 func _ready():
-	load_level(global.Level)
+	load_level(global.Levels[global.CurLevel])
 	Bullets = get_node("Bullets")
 
 func _process(delta):
@@ -27,8 +27,8 @@ func _process(delta):
 		if Player != null && Door != null:
 			$CanvasLayer/Arrow.set_rotation( ((Player.position - Door.position).normalized()).angle())
 	if not Ended:
-			Time += delta
-			$CanvasLayer/Label.text = str(stepify(Time,0.01))
+			LevelTimer += delta
+			$CanvasLayer/Label.text = str(stepify(LevelTimer,0.01))
 	$CanvasLayer/Label2.text = str("Orphans Remaining: ", Children.size())
 
 func load_level(path):
@@ -39,7 +39,7 @@ func load_level(path):
 func End():
 	$AnimationPlayer.play("End")
 	Ended = true
-	$CanvasLayer/EndPanel2/Label.text = str(stepify(Time,0.01))
+	$CanvasLayer/EndPanel2/Label.text = str(stepify(LevelTimer,0.01))
 
 func _on_Exit_pressed():
 	get_tree().change_scene("res://scenes/screens/MainMenu.tscn")
@@ -47,3 +47,17 @@ func _on_Exit_pressed():
 
 func _on_Exit2_pressed():
 	get_tree().quit()
+
+
+func _on_NextLevel_pressed():
+	var e = $Level.get_children()
+	for i in e:
+		i.queue_free()
+	global.CurLevel += 1
+	load_level(global.Levels[global.CurLevel])
+	if global.Levels.size() == global.CurLevel + 1:
+		$CanvasLayer/EndPanel2/VBoxContainer/NextLevel.hide()
+	$CanvasLayer/EndPanel2.hide()
+	$CanvasLayer/Arrow.hide()
+	Ended = false
+	LevelTimer = 0

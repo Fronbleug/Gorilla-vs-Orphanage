@@ -5,4 +5,4 @@ signal use
 
 
 func Use():
-	emit_signal("use",0)
+	emit_signal("use")
