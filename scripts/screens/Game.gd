@@ -16,10 +16,11 @@ var Ended = false
 
 var Door = null
 
+onready var Enemy = preload("res://scenes/objects/ThrowObjects/LivingObjects/Enemy.tscn")
+
 func _ready():
 	load_level(global.Levels[global.CurLevel])
 	Bullets = get_node("Bullets")
-
 func _process(delta):
 	
 	if Children.size() <= 0:
@@ -30,7 +31,11 @@ func _process(delta):
 			LevelTimer += delta
 			$CanvasLayer/Label.text = str(stepify(LevelTimer,0.01))
 	$CanvasLayer/Label2.text = str("Orphans Remaining: ", Children.size())
-
+func SpawnCops():
+	for i in range():
+		var e = Enemy.instance()
+		Level.get_node("YSort").add_child(e)
+		yield(get_tree().create_timer(0.3),"timeout")
 func load_level(path):
 	var level = load(path).instance()
 	$Level.add_child(level)
@@ -55,7 +60,7 @@ func _on_NextLevel_pressed():
 		i.queue_free()
 	global.CurLevel += 1
 	load_level(global.Levels[global.CurLevel])
-	if global.Levels.size() == global.CurLevel + 1:
+	if global.Levels.size() >= global.CurLevel + 1:
 		$CanvasLayer/EndPanel2/VBoxContainer/NextLevel.hide()
 	$CanvasLayer/EndPanel2.hide()
 	$CanvasLayer/Arrow.hide()

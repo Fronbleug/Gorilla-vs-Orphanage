@@ -45,6 +45,8 @@ var Punched = false
 
 var Ended = false
 
+var HP = 100
+
 
 onready var GrabSound = preload("res://audio/grab.ogg")
 onready var DropSound = preload("res://audio/drop.ogg")
@@ -223,4 +225,14 @@ func _on_Hand_body_exited(body):
 	if STATES.grab:
 		Punched = false
 
+func ArmPastMax():
+	pass
 
+
+
+
+func _on_Damage_body_entered(body):
+	if body.is_in_group("Bullet"):
+		HP -= 10
+		print("poop")
+		$HurtSound.play()

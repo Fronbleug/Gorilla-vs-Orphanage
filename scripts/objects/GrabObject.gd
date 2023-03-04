@@ -43,16 +43,13 @@ func _physics_process(delta):
 			Friction = 0
 	PreColVel = Velocity
 	if not Grabbed:
-		Velocity = lerp(Velocity,Vector2(), Friction)
-		Velocity = move_and_slide(Velocity)
+		Move()
 		if Piercing:
 			if Velocity != Vector2():
 				rotation = Velocity.angle()
 		
 		if get_slide_count() > 0:
-			if not Piercing:
-				Velocity=PreColVel.bounce(get_slide_collision(0).normal)
-			else:
+			if Piercing:
 				Velocity=PreColVel
 	else:
 		if Grabber != null:
@@ -67,11 +64,12 @@ func Grab(e):
 	Grabber = e
 	Grabbed = true
 
+func Move():
+	Velocity = lerp(Velocity,Vector2(), Friction)
+	Velocity = move_and_slide(Velocity)
 
 func _on_Area2D_body_entered(body):
 	if body != self:
-		if body.is_in_group("GrabObject"):
-			Collided(body.PreColVel,body.Mass)
 		if body.is_in_group("Bullet"):
 			body.queue_free()
 			Collided(body.Velocity, body.Mass)

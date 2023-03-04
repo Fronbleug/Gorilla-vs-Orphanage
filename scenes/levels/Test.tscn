@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/objects/Child.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/levels/level.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/objects/ThrowObjects/Guns/Pistol.tscn" type="PackedScene" id=5]
 [ext_resource path="res://assets/tilemaps/Test.tres" type="TileSet" id=6]
 [ext_resource path="res://scripts/objects/Tiles.gd" type="Script" id=7]
+[ext_resource path="res://sprites/objects/babytexture3.png" type="Texture" id=8]
 [ext_resource path="res://scenes/objects/Player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://scenes/objects/ThrowObjects/Guns/Musket.tscn" type="PackedScene" id=11]
 [ext_resource path="res://scenes/objects/ThrowObjects/Guns/SuperGun.tscn" type="PackedScene" id=12]
@@ -99,6 +100,7 @@ position = Vector2( 78, -695 )
 
 [node name="Child24" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 2779, -1276 )
+texture = ExtResource( 8 )
 
 [node name="Child25" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 3236, -1280 )

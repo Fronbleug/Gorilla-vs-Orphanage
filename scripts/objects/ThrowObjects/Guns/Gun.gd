@@ -1,3 +1,4 @@
+class_name Gun
 extends Weapon
 
 
@@ -21,10 +22,10 @@ func _physics_process(delta):
 	if Grabber != null:
 		Grabber.Ammo = Ammo
 	if Shooting:
-		Shoot()
+		Shoot(false)
 		
 
-func Shoot():
+func Shoot(enemy):
 	if Ammo > 0 and CanShoot:
 		print("D21")
 		Ammo -= 1
@@ -44,6 +45,8 @@ func Shoot():
 				bulletDir *= -1
 			1:
 				bulletDir *= 1
+		if enemy:
+			bullet.collision_layer = 32
 		
 		
 		
@@ -57,7 +60,7 @@ func Use():
 	if Auto:
 		Shooting = true
 	else:
-		Shoot()
+		Shoot(false)
 func UnUse():
 	if Auto:
 		Shooting = false

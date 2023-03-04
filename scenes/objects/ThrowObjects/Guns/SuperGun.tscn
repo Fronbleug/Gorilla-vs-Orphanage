@@ -8,7 +8,6 @@ Ammo = 100.0
 ShootTime = 0.01
 Accuracy = 0.001
 Auto = true
-Damage = 0.1
 
 [node name="Icon" parent="." index="0"]
 texture = ExtResource( 1 )

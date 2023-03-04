@@ -14,10 +14,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/objects/GrabObject.gd"
 }, {
+"base": "Weapon",
+"class": "Gun",
+"language": "GDScript",
+"path": "res://scripts/objects/ThrowObjects/Guns/Gun.gd"
+}, {
 "base": "Node2D",
 "class": "Level",
 "language": "GDScript",
 "path": "res://scripts/levels/level.gd"
+}, {
+"base": "GrabObject",
+"class": "LivingGrabObject",
+"language": "GDScript",
+"path": "res://scripts/objects/LivingGrabObject.gd"
+}, {
+"base": "LivingGrabObject",
+"class": "PathFinder",
+"language": "GDScript",
+"path": "res://scripts/objects/ThrowObjects/LivingThrowObject/PathFindingGuy.gd"
 }, {
 "base": "GrabObject",
 "class": "Remote",
@@ -31,7 +46,10 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GrabObject": "",
+"Gun": "",
 "Level": "",
+"LivingGrabObject": "",
+"PathFinder": "",
 "Remote": "",
 "Weapon": ""
 }
@@ -146,6 +164,10 @@ ScrollDown={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[navigation]
+
+2d/default_edge_connection_margin=32.0
 
 [physics]
 

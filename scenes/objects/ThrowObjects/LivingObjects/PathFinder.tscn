@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/objects/ThrowObjects/LivingThrowObject/PathFindingGuy.gd" type="Script" id=1]
+[ext_resource path="res://scenes/objects/GrabObject.tscn" type="PackedScene" id=2]
+
+[node name="PathFinder" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+MaxHp = 100
+WalkSpeed = 32
+TargetLocation = Vector2( 0, 0 )
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
+path_desired_distance = 32.0
+target_desired_distance = 32.0
+avoidance_enabled = true
+max_speed = 100000.0
+
+[node name="StunTimer" type="Timer" parent="." index="4"]
+one_shot = true
+
+[node name="PointToTarget" type="RayCast2D" parent="." index="5"]
+collision_mask = 33
+collide_with_areas = true
+
+[node name="WallCast" type="RayCast2D" parent="." index="6"]
+enabled = true
+
+[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_target_reached"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_velocity_computed"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]

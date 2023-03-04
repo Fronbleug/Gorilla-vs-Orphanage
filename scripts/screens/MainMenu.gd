@@ -17,7 +17,8 @@ func _on_Button2_pressed():
 
 
 func _on_secretButton_pressed():
-	global.Level = "res://scenes/levels/Debug.tscn"
+	global.Levels.append("res://scenes/levels/Debug.tscn")
+	global.CurLevel = 2
 
 
 func _on_settings_pressed():
