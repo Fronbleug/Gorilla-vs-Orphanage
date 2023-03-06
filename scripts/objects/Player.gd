@@ -13,12 +13,13 @@ onready var Bullet = preload("res://scenes/objects/Bullet.tscn")
 
 var ArmWeight = 2
 
+const MAXARMLENGTH = 64
 
 var GrabbedObject : GrabObject = null
 
 var HoverObject = null
 
-export var MaxArmLength = 128
+export var MaxArmLength =64
 
 var GrabFloor = false
 
@@ -67,7 +68,7 @@ func _physics_process(delta):
 	TileOn = get_tree().root.get_node("Game").Tilemap.GetTileType(tile)
 	var lastpos = position
 	
-	var lap =$Arm/Hand/Hand/Hand.get_overlapping_bodies() 
+	var lap =$Arm/Hand/Hand2.get_overlapping_bodies() 
 	if lap.size() > 0:
 		for body in lap:
 			if State == STATES.default:
@@ -118,16 +119,18 @@ func _physics_process(delta):
 					GrabbedObject.Flip(false)
 		if InputDir != Vector2():
 			$AnimationPlayer.play("walk")
+			$Particles2D.emitting = true
 		else:
 			$AnimationPlayer.play("idle")
+			$Particles2D.emitting = false
 		
 		
 
 		
 		if GrabbedObject == null:
-			Velocity += InputDir * 35
+			Velocity += InputDir * 26
 		else:
-			Velocity += InputDir * 35
+			Velocity += InputDir * 20
 		Velocity = move_and_slide(Velocity)
 		Velocity = Velocity.clamped(120000)
 		
@@ -159,7 +162,7 @@ func _physics_process(delta):
 		$Arm/Hand/Hand.frame = State
 		
 		
-		$CanvasLayer/Control/cursor.rect_position = get_local_mouse_position().clamped(MaxArmLength)-Vector2(8,8)
+		$CanvasLayer/Control/cursor.rect_position = (get_local_mouse_position().clamped(MaxArmLength)/$Camera2D.zoom.x-Vector2(8,8))
 		
 		PunchVel = ($Arm/Hand.position - handpos)/delta
 		
@@ -175,7 +178,7 @@ func _physics_process(delta):
 						HoverObject.queue_free()
 						HoverObject = null
 					else:
-						if not $Arm/Hand/Hand/Hand.overlaps_body(HoverObject):
+						if not $Arm/Hand/Hand2.overlaps_body(HoverObject):
 							HoverObject = null
 						else:
 

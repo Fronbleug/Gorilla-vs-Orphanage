@@ -5,7 +5,6 @@ export (StreamTexture) var texture
 func _ready():
 	add_to_group("Child")
 	get_tree().root.get_node("Game").Children.append(self)
-	$Icon.material.set("shader_param/Image",texture)
 	
 
 
