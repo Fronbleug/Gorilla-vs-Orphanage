@@ -27,7 +27,6 @@ Exit = NodePath("Area2D")
 [node name="TileMap2" type="TileMap" parent="." groups=["Wall"]]
 z_index = -1
 tile_set = ExtResource( 6 )
-show_collision = true
 cell_clip_uv = true
 collision_layer = 4
 collision_mask = 0

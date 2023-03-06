@@ -9,16 +9,16 @@
 [ext_resource path="res://audio/GorillaHurt.ogg" type="AudioStream" id=7]
 
 [sub_resource type="CapsuleShape2D" id=9]
-radius = 13.8737
-height = 33.7526
+height = 30.0
 
 [sub_resource type="CircleShape2D" id=10]
-radius = 32.0
+radius = 30.0
 
 [sub_resource type="CircleShape2D" id=4]
 radius = 16.0
 
 [sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16, 16 )
 
 [sub_resource type="Shader" id=5]
 code = "shader_type  canvas_item;
@@ -78,7 +78,7 @@ texture = ExtResource( 1 )
 hframes = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 24.1263 )
+position = Vector2( 0, 26 )
 rotation = 1.5708
 shape = SubResource( 9 )
 
@@ -101,7 +101,7 @@ round_precision = 1
 
 [node name="Hand" type="KinematicBody2D" parent="Arm"]
 collision_layer = 0
-collision_mask = 5
+collision_mask = 4
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Arm/Hand"]
 shape = SubResource( 4 )
@@ -167,7 +167,6 @@ anims/idle = SubResource( 7 )
 anims/walk = SubResource( 8 )
 
 [node name="Light2D" type="Light2D" parent="."]
-position = Vector2( 0, 24.25 )
 texture = ExtResource( 5 )
 texture_scale = 27.44
 mode = 3
@@ -175,6 +174,9 @@ shadow_enabled = true
 shadow_color = Color( 0, 0, 0, 1 )
 shadow_gradient_length = 7.0
 shadow_filter = 5
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="HurtSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
