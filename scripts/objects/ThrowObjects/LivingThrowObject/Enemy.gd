@@ -1,6 +1,6 @@
 extends PathFinder
 
-enum STATES {idle,pathfinding,shooting,kicking,runnning}
+enum STATES {idle,pathfinding,shooting,kicking,runnning,stunned}
 
 export (PackedScene) var SpawnWeapon = null
 var HoldObject : Gun = null 
@@ -19,35 +19,43 @@ func _ready():
 	if SpawnWeapon != null:
 
 		HoldObject = SpawnWeapon.instance()
-		HoldObject.collision_layer = 0
+		HoldObject.connect("Grabbed",self,"DropGun")
 		add_child(HoldObject)
-
 func _physics_process(delta):
-	$PointToTarget.cast_to = position.direction_to(TargetLocation) * (position.distance_to(TargetLocation)+16)
+	$PointToTarget.cast_to = position.direction_to(TargetLocation) * (position.distance_to(TargetLocation)+32)
 	$JunkDetection.position = Velocity.normalized() * 64
-	Pathing = false
 	match State:
 		STATES.idle:
-			pass
+			Pathing = false
 		STATES.pathfinding:
 			Pathing = true
 		STATES.kicking:
 			Pathing = false
+		STATES.stunned:
+			Pathing = false
+			
 	if StateCanChange:
-		if NavAgent.distance_to_target() <= 512 && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player:
-			State = STATES.shooting
-		elif not (NavAgent.distance_to_target() <= 256  && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player):
-			State = STATES.pathfinding
+		if path.size() > 0:
+			if global_position.distance_to(path[0]) <= 512 && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player:
+				State = STATES.shooting
+			elif not (global_position.distance_to(path[0]) <= 512  && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player):
+				State = STATES.pathfinding
 
-	
-	if NavAgent.distance_to_target() < 200 && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player:
-		Velocity -= position.direction_to(TargetLocation) * (WalkSpeed)
+	if path.size() > 0:
+		if global_position.distance_to(path[0]) < 128 && $PointToTarget.get_collider() == get_tree().root.get_node("Game").Player:
+			Velocity -= position.direction_to(TargetLocation) * (WalkSpeed)
 	#Gun Stuff
 	if HoldObject != null:
+		HoldObject.position = Vector2()
 		HoldObject.rotation = position.direction_to(TargetLocation + get_tree().root.get_node("Game").Player.Velocity/2).angle()
 func Grab(e):
 	.Grab(e)
 	DropGun()
+func Collided(vel,weight):
+	State = STATES.stunned
+	StateCanChange = false
+	$StateChangeTimer.start(0.5)
+	.Collided(vel,weight)
 
 
 func Die():
@@ -56,10 +64,11 @@ func Die():
 
 func DropGun():
 	if HoldObject!= null:
-		HoldObject.call_deferred("set","collision_layer",2)
+		
+		
+		HoldObject.Velocity = Velocity * 2
+		HoldObject.position = position + Velocity.normalized().rotated(deg2rad(90))*64
 		remove_child(HoldObject)
-		HoldObject.Velocity = Velocity
-		HoldObject.position = position
 		get_parent().call_deferred("add_child", HoldObject)
 		HoldObject = null
 
@@ -71,7 +80,7 @@ func TargetPlayer():
 
 func _on_ShootTimer_timeout():
 	if HoldObject != null:
-		if Shooting:
+		if State == STATES.shooting:
 			HoldObject.Shoot(true)
 
 
@@ -82,11 +91,12 @@ func _on_JunkDetection_body_entered(body):
 			StateCanChange = false
 			$StateChangeTimer.start(0.5)
 			kickObject = body
-			KickVel = Velocity
+			KickVel = Velocity.normalized()
 			$AnimationPlayer.play("Kick")
 func _Kick():
-	if kickObject != null:
-		kickObject.Collided(KickVel*10,1.0)
+	
+	if kickObject != null && not kickObject.is_queued_for_deletion():
+		kickObject.Collided(KickVel*2000,1.0)
 
 
 func _on_StateChangeTimer_timeout():

@@ -27,11 +27,12 @@ tracks/0/keys = {
 
 [node name="Enemy" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
-MaxHp = 150
+MaxHp = 200
 SpawnWeapon = ExtResource( 3 )
 
-[node name="NavigationAgent2D" parent="." index="3"]
-path_max_distance = 100.0
+[node name="PointToTarget" parent="." index="4"]
+enabled = true
+collision_mask = 5
 
 [node name="PathTimer" type="Timer" parent="." index="5"]
 wait_time = 0.1
@@ -42,10 +43,6 @@ autostart = true
 
 [node name="StateChangeTimer" type="Timer" parent="." index="7"]
 one_shot = true
-
-[node name="PointToTarget" parent="." index="8"]
-enabled = true
-collision_mask = 7
 
 [node name="JunkDetection" type="Area2D" parent="." index="9"]
 position = Vector2( 0, 46 )

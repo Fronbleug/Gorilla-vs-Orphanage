@@ -167,7 +167,7 @@ ScrollDown={
 
 [navigation]
 
-2d/default_edge_connection_margin=32.0
+2d/default_edge_connection_margin=48.0
 
 [physics]
 

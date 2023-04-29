@@ -26,6 +26,8 @@ var TileOn = TILES.default
 
 var Col = null
 
+signal Grabbed
+
 func _ready():
 	add_to_group("GrabObject")
 
@@ -63,6 +65,7 @@ func Grab(e):
 	z_index = -1
 	Grabber = e
 	Grabbed = true
+	emit_signal("Grabbed")
 
 func Move():
 	Velocity = lerp(Velocity,Vector2(), Friction)
@@ -95,7 +98,7 @@ func Collided(vel,mass):
 	Velocity = VF
 
 func _on_Area2D_area_entered(area):
-	if area.owner.is_in_group("GrabObject") && area.owner != self:
+	if area.owner.is_in_group("GrabObject") && area.owner != self && not self.is_a_parent_of(area.owner):
 		Collided(area.owner.PreColVel,area.owner.Mass)
 
 func Use():

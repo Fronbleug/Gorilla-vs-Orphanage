@@ -7,24 +7,21 @@
 script = ExtResource( 1 )
 MaxHp = 100
 WalkSpeed = 32
+MoveSpeed = 32
 TargetLocation = Vector2( 0, 0 )
 
-[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="3"]
-path_desired_distance = 32.0
-target_desired_distance = 32.0
-avoidance_enabled = true
-max_speed = 100000.0
-
-[node name="StunTimer" type="Timer" parent="." index="4"]
+[node name="StunTimer" type="Timer" parent="." index="3"]
 one_shot = true
 
-[node name="PointToTarget" type="RayCast2D" parent="." index="5"]
+[node name="PointToTarget" type="RayCast2D" parent="." index="4"]
 collision_mask = 33
 collide_with_areas = true
 
-[node name="WallCast" type="RayCast2D" parent="." index="6"]
+[node name="WallCast" type="RayCast2D" parent="." index="5"]
 enabled = true
+collision_mask = 4
 
-[connection signal="target_reached" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_target_reached"]
-[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_NavigationAgent2D_velocity_computed"]
+[node name="Line2D" type="Line2D" parent="." index="6"]
+visible = false
+
 [connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
