@@ -27,7 +27,6 @@ func _physics_process(delta):
 
 func Shoot(enemy):
 	if Ammo > 0 and CanShoot:
-		print("D21")
 		Ammo -= 1
 		var SFX = global.SFX.instance()
 		SFX.start(GunSound)
@@ -54,7 +53,10 @@ func Shoot(enemy):
 		bullet.Start(Speed, Vector2.RIGHT.rotated(rotation+deg2rad(bulletDir)), $FirePoint.global_position,Damage)
 		get_tree().root.get_node("Game").Bullets.add_child(bullet)
 		CanShoot = false
-		$Timer.start(ShootTime)
+		owner.ShakeCam(16)
+		yield(get_tree().create_timer(ShootTime), "timeout")
+		CanShoot = true
+		$CockingSOund.play()
 
 func Use():
 	if Auto:
@@ -70,6 +72,4 @@ func UnUse():
 		
 
 
-func _on_Timer_timeout():
-	CanShoot = true
-	$CockingSOund.play()
+

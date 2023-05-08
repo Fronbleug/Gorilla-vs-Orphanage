@@ -32,7 +32,6 @@ var PunchVel = Vector2()
 
 var Rotation = 0
 
-var HandLight = false
 
 var Mass = 1
 
@@ -43,11 +42,20 @@ var TileOn = TILES.default
 var Ammo = 0
 
 var Punched = false
-
 var Ended = false
+
+var ThrowBuffer = 0.0
+var BufferVel = Vector2()
 
 var HP = 100
 
+var ShakeTime = 0.0
+var ShakeMag = 0.0
+
+# Called when the node enters the scene tree for the first time.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 
 onready var GrabSound = preload("res://audio/grab.ogg")
 onready var DropSound = preload("res://audio/drop.ogg")
@@ -58,6 +66,13 @@ onready var IceICeBabu = preload("res://audio/IceIceBaby.wav")
 func _ready():
 	get_tree().root.get_node("Game").Player = self
 func _physics_process(delta):
+	if ShakeMag >= 1:
+		ShakeTime += delta
+		ShakeMag = lerp(ShakeMag,0.0,0.08)
+		$Camera2D.position.x = cos(ShakeTime*75)*ShakeMag
+		$Camera2D.position.y = sin(ShakeTime*50)*ShakeMag
+	else:
+		$Camera2D.position = Vector2()
 	if GrabbedObject != null:
 			if GrabbedObject.is_in_group("Gun"):
 					$CanvasLayer/Ammo.text = str("Ammo: ", Ammo)
@@ -94,12 +109,7 @@ func _physics_process(delta):
 			$CanvasLayer/Label.show()
 			
 			Friction = 0
-	
-	if HandLight:
-		$Light2D.visible = false
-	else:
-		$Light2D.visible = true
-	
+	var lpv = PunchVel
 	if not Ended:
 		Velocity = lerp(Velocity,Vector2(), Friction)
 		InputDir.x = Input.get_axis("ui_left","ui_right") 
@@ -142,19 +152,12 @@ func _physics_process(delta):
 		
 		$Arm.set_point_position(0, Vector2())
 		var handpos = $Arm/Hand.position
-		if (not GrabFloor)||(GrabbedObject == null&&GrabFloor):
-			
-			
-			ArmVelocity = (get_local_mouse_position()-$Arm/Hand.position) * 10 / ArmWeight
-			ArmVelocity = $Arm/Hand.move_and_slide(ArmVelocity)
-			if $Arm/Hand.position .length() >= MaxArmLength:
-				$Arm/Hand.position = $Arm/Hand.position.clamped(MaxArmLength)
-			
-		elif GrabbedObject != null:
-
-				$Arm.set_point_position(1,GrabFloorPoint - position)
-				var GrabFloorOffSet = (get_global_mouse_position()-GrabFloorPoint )
-				position = GrabFloorPosition + GrabFloorOffSet
+		var preArmVel = ArmVelocity
+		ArmVelocity = (get_local_mouse_position()-$Arm/Hand.position) * 10 / ArmWeight
+		
+		ArmVelocity = $Arm/Hand.move_and_slide(ArmVelocity)
+		if $Arm/Hand.position .length() >= MaxArmLength:
+			$Arm/Hand.position = $Arm/Hand.position.clamped(MaxArmLength)
 		$Arm.set_point_position(1,$Arm/Hand.position)
 		
 		$Arm/Hand/Hand.rotation = $Arm/Hand.position.angle()
@@ -164,8 +167,12 @@ func _physics_process(delta):
 		
 		$CanvasLayer/Control/cursor.rect_position = (get_local_mouse_position().clamped(MaxArmLength)/$Camera2D.zoom.x-Vector2(8,8))
 		
-		PunchVel = ($Arm/Hand.position - handpos)/delta
-		
+		PunchVel = (ArmVelocity-preArmVel)
+		CheckThrowBuffer(PunchVel)
+		if ThrowBuffer > 0.0 && (PunchVel.length() > BufferVel.length()):
+			BufferVel = PunchVel
+		if ThrowBuffer <= 0.0:
+			BufferVel = Vector2()
 		
 		if Input.is_action_just_pressed("Click"):
 				var SFX = global.SFX.instance()
@@ -205,18 +212,25 @@ func _physics_process(delta):
 		if Input.is_action_just_released("LeftClick"):
 			if GrabbedObject != null:
 				GrabbedObject.UnUse()
-		if Input.is_action_just_pressed("MiddleClick"):
-			HandLight = !HandLight
 	else:
 		Velocity = Vector2()
 		ArmVelocity = Vector2()
-	if HoverObject != null && GrabbedObject!=null && State == STATES.grab || State == STATES.shoot:
+	if ThrowBuffer > 0.0:
+		ThrowBuffer -= delta
+	if HoverObject != null && GrabbedObject != null && State == STATES.grab || State == STATES.shoot && GrabbedObject != null :
 				
 				ArmWeight = GrabbedObject.Mass
 				GrabbedObject.position = $Arm/Hand.global_position
+				if ThrowBuffer<=0.0:
+					GrabbedObject.Velocity = PunchVel + Velocity
+				else:
+					GrabbedObject.Velocity = BufferVel
 	else:
 			ArmWeight = 1
-
+func CheckThrowBuffer(vel:Vector2):
+	if vel.length() >= 100:
+		print("yes")
+		ThrowBuffer = 0.08
 
 func End():
 	Ended = true

@@ -90,7 +90,7 @@ position = Vector2( 1691, -230 )
 position = Vector2( 1537, -240 )
 
 [node name="Child21" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 688, -336 )
+position = Vector2( 691, -336 )
 
 [node name="Child22" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 1143, -339 )
@@ -133,7 +133,6 @@ __meta__ = {
 
 [node name="Rock" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 72, 89 )
-Mass = 10
 
 [node name="SuperGun" parent="YSort" instance=ExtResource( 12 )]
 position = Vector2( -127, 215 )

@@ -1,21 +1,15 @@
 class_name LivingGrabObject
 extends GrabObject
 
-var Hp = 100
-export var MaxHp = 100
+
 onready var Sound = preload("res://audio/gore.ogg")
 onready var Sound2 = preload("res://audio/gore2.ogg")
 
 
 
-func _ready():
-	Hp = MaxHp
 
 
-func Hurt(damage):
-	Hp -= damage
-	if Hp <= 0:
-		Die()
+
 func Die():
 		if Grabbed && Grabber != null:
 			Grabber.GrabbedObject = null
@@ -28,6 +22,7 @@ func Die():
 		SFX.start(GetGoreSound())
 		SFX.position = position
 		get_parent().add_child(SFX)
+		
 		queue_free()
 func GetGoreSound():
 	var RNG = RandomNumberGenerator.new()
@@ -38,6 +33,3 @@ func GetGoreSound():
 		1:
 			return Sound2
 	 
-func Collided(vel,weight):
-		.Collided(vel,weight)
-		Hurt(Mass + weight * (Velocity.length() + vel.length())/10)

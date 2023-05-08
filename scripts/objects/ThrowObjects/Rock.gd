@@ -4,6 +4,8 @@ extends GrabObject
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+
+
 func _ready():
 	
 	$Icon.frame = global.RNG.randi_range(0,2)

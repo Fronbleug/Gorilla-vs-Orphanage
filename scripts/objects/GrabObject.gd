@@ -14,6 +14,9 @@ var PreColVel = Vector2()
 var Grabber = null
 var Delta = 0
 
+var Hp = 100
+export var MaxHp = INF
+
 export var Piercing = false
 
 export var Damage = 1
@@ -26,10 +29,13 @@ var TileOn = TILES.default
 
 var Col = null
 
+var AngVel = 0.0
+
 signal Grabbed
 
 func _ready():
 	add_to_group("GrabObject")
+	Hp = MaxHp
 
 func _physics_process(delta):
 
@@ -49,14 +55,31 @@ func _physics_process(delta):
 		if Piercing:
 			if Velocity != Vector2():
 				rotation = Velocity.angle()
+		else:
+			if Velocity.length() > 0.1:
+				AngVel = Velocity.length()/16
+				if Velocity.x < 0:
+					AngVel = -AngVel
+				rotation_degrees += AngVel
 		
 		if get_slide_count() > 0:
 			if Piercing:
 				Velocity=PreColVel
 	else:
 		if Grabber != null:
-			Velocity = ((position - lastpos)/delta) - (Grabber.Velocity/1.15)
+			#Velocity = ((position - lastpos)/delta) - (Grabber.Velocity/1.15)
+			pass
 	lastpos = position
+func Hurt(damage):
+	Hp -= damage
+	if Hp <= 0:
+		Die()
+func Die():
+	if Grabbed && Grabber != null:
+			Grabber.GrabbedObject = null
+			Grabber.HoverObject = null
+			Grabber = null
+	queue_free()
 func UnGrab():
 	z_index = 0
 	Grabbed = false
@@ -94,8 +117,10 @@ func Collided(vel,mass):
 	var MT = 0
 	MT = mass + Mass
 	VF = ( vel*mass - Velocity*Mass )/MT
+	owner.ShakeCam(VF.length()/32)
 	print(str(self," ", VF))
 	Velocity = VF
+	Hurt(Mass + mass * (Velocity.length() + vel.length())/10)
 
 func _on_Area2D_area_entered(area):
 	if area.owner.is_in_group("GrabObject") && area.owner != self && not self.is_a_parent_of(area.owner):
