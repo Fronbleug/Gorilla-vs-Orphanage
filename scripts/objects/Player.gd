@@ -184,6 +184,8 @@ func _physics_process(delta):
 					if HoverObject.is_in_group("Collect"):
 						HoverObject.queue_free()
 						HoverObject = null
+					elif HoverObject.is_in_group("Cat"):
+						HoverObject = null
 					else:
 						if not $Arm/Hand/Hand2.overlaps_body(HoverObject):
 							HoverObject = null

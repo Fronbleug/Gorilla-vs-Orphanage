@@ -3,7 +3,7 @@
 [ext_resource path="res://sprites/objects/ButtonObjects/ButtonDooe.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 64, 64 )
+extents = Vector2( 32, 32 )
 
 [node name="ButtonDoor" type="StaticBody2D"]
 position = Vector2( -704, -1600 )
@@ -17,4 +17,5 @@ __meta__ = {
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )

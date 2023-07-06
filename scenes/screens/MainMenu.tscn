@@ -56,7 +56,6 @@ margin_bottom = 990.378
 text = "Settings"
 
 [node name="WindowDialog" type="WindowDialog" parent="."]
-visible = true
 margin_left = 257.0
 margin_top = 256.0
 margin_right = 1198.0

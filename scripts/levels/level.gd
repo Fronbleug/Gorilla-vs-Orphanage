@@ -16,7 +16,7 @@ func _ready():
 		audio.stream = Music
 		audio.play()
 func ShakeCam(am:float):
-	$YSort/Player.ShakeMag += am
+	$YSort/Player.ShakeMag += am 
 func _on_Teleport_body_entered(body):
 	if body.is_in_group("Player") or body.is_in_group("GrabObject"):
 		body.position = Vector2(1750,body.position.y)

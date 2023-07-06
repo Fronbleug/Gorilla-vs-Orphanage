@@ -331,7 +331,7 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 13/autotile/occluder_map = [ Vector2( 0, 3 ), SubResource( 26 ) ]
 13/autotile/navpoly_map = [  ]
 13/autotile/priority_map = [  ]
-13/autotile/z_index_map = [  ]
+13/autotile/z_index_map = [ Vector3( 0, 0, 4 ), Vector3( 1, 0, 4 ), Vector3( 2, 0, 4 ) ]
 13/occluder_offset = Vector2( 0, 0 )
 13/navigation_offset = Vector2( 0, 0 )
 13/shape_offset = Vector2( 0, 0 )
@@ -434,12 +434,12 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 "shape": SubResource( 25 ),
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
-14/z_index = 0
+14/z_index = 4
 15/name = "orphanage.png 15"
 15/texture = ExtResource( 4 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
-15/region = Rect2( 96, 0, 32, 32 )
+15/region = Rect2( 96, 32, 32, 32 )
 15/tile_mode = 0
 15/occluder_offset = Vector2( 0, 0 )
 15/navigation_offset = Vector2( 0, 0 )
@@ -448,7 +448,7 @@ points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
 15/shape_one_way = false
 15/shape_one_way_margin = 0.0
 15/shapes = [  ]
-15/z_index = 0
+15/z_index = 4
 16/name = "orphanage.png 16"
 16/texture = ExtResource( 4 )
 16/tex_offset = Vector2( 0, 0 )

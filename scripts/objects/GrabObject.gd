@@ -117,7 +117,8 @@ func Collided(vel,mass):
 	var MT = 0
 	MT = mass + Mass
 	VF = ( vel*mass - Velocity*Mass )/MT
-	owner.ShakeCam(VF.length()/32)
+	if owner != null:
+		owner.ShakeCam(VF.length()/32)
 	print(str(self," ", VF))
 	Velocity = VF
 	Hurt(Mass + mass * (Velocity.length() + vel.length())/10)
